@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  userName    String        @unique
+  password    String
+  email       String        @unique
+  gender      Gender        @default(Male)
+  birthday    DateTime
+  phone       String
+  avatar      String
+  fidelity    Int
+  role        Role          @default(FREE)
+  booking     Booking[]
+  review      Review[]
+  gameLike    GameLike[]
+  badge       Badge[]
+  UserToBadge UserToBadge[]
+}
+
+model Place {
+  id      Int       @id @default(autoincrement())
+  name    String
+  address String    @unique
+  city    String
+  zip     String
+  phone   String
+  menu    String
+  event   Event[]
+  booking Booking[]
+}
+
+model Game {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  category    String
+  quantity    Int        @default(1)
+  price       Int?
+  type        String
+  age         String
+  releaseYear DateTime
+  rating      Int
+  booking     Booking[]
+  review      Review[]
+  gameLike    GameLike[]
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  date        DateTime
+  //place_id
+  place       Place    @relation(fields: [placeId], references: [id])
+  placeId     Int
+}
+
+model Badge {
+  id          Int           @id @default(autoincrement())
+  name        String
+  description String
+  condition   String        @unique
+  img         String
+  user        User[]
+  UserToBadge UserToBadge[]
+}
+
+model Booking {
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  nbPeople Int
+  //user_id
+  user     User     @relation(fields: [userId], references: [id])
+  userId   Int
+  //game_id
+  game     Game     @relation(fields: [gameId], references: [id])
+  gameId   Int
+  //place_id
+  place    Place    @relation(fields: [placeId], references: [id])
+  placeId  Int
+}
+
+model Review {
+  id      Int    @id @default(autoincrement())
+  content String
+  rating  Int
+  //user_id
+  user    User   @relation(fields: [userId], references: [id])
+  userId  Int
+  //game_id
+  game    Game   @relation(fields: [gameId], references: [id])
+  gameId  Int
+}
+
+model GameLike {
+  //user_id
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+  //game_id
+  game   Game @relation(fields: [gameId], references: [id])
+  gameId Int
+
+  @@id([userId, gameId])
+}
+
+model UserToBadge {
+  user    User  @relation(fields: [userId], references: [id])
+  userId  Int
+  badge   Badge @relation(fields: [badgeId], references: [id])
+  badgeId Int
+
+  @@id([userId, badgeId])
+}
+
+enum Role {
+  FREE
+  PREMIUM
+  ADMIN
+}
+
+enum Gender {
+  Male
+  Femele
+  Other
+}
