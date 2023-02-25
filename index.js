@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
-const authRoute = require("./routes/authRoute");
-const userRoute = require("./routes/userRoute");
+const authRoutes = require("./routes/authRoute");
+const userRoutes = require("./routes/userRoute");
 // const placeRoute = require("./routes/placeRoute");
 // const gameRoute = require("./routes/gameRoute");
 // const eventRoute = require("./routes/eventRoute");
@@ -23,8 +23,8 @@ app.get("/", async (req, res) => {
   res.send("Hello World!");
 });
 
-// app.use("/user", userRoutes);
-app.use("/auth", authRoute);
+app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 // app.use("/place", placeRoutes);
 // app.use("/game", gameRoutes);
 // app.use("/event", eventRoutes);
