@@ -39,9 +39,25 @@ const deleteOne = async (req, res) => {
     });
     res.status(200).send({ success: `User ${req.params.id} deleted!` });
   } catch (err) {
+    res.status(400).send({ error: err });
+  }
+};
+
+const updateOne = async (req, res) => {
+  try {
+    const updateUsers = await prisma.user.updateMany({
+      where: {
+        id: parseInt(req.params.id),
+      },
+      data: req.body,
+    });
+    res
+      .status(200)
+      .send({ success: `User ${req.params.id} updated!`, user: updateUsers });
+  } catch (err) {
     console.log(err);
     res.status(400).send({ error: err });
   }
 };
 
-module.exports = { getAll, getOne, deleteOne };
+module.exports = { getAll, getOne, deleteOne, updateOne };
