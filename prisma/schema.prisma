@@ -20,8 +20,8 @@ model User {
   gender      Gender        @default(Male)
   birthday    DateTime
   phone       String
-  avatar      String
-  fidelity    Int
+  avatar      String        @default("http://cdn.onlinewebfonts.com/svg/img_561543.png")
+  fidelity    Int           @default(0)
   role        Role          @default(FREE)
   booking     Booking[]
   review      Review[]
