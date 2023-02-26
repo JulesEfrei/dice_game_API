@@ -3,7 +3,7 @@ const cors = require("cors");
 const { PrismaClient } = require("@prisma/client");
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
-// const placeRoute = require("./routes/placeRoute");
+const placeRoutes = require("./routes/placeRoute");
 // const gameRoute = require("./routes/gameRoute");
 // const eventRoute = require("./routes/eventRoute");
 // const badgeRoute = require("./routes/badgeRoute");
@@ -25,7 +25,7 @@ app.get("/", async (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
-// app.use("/place", placeRoutes);
+app.use("/place", placeRoutes);
 // app.use("/game", gameRoutes);
 // app.use("/event", eventRoutes);
 // app.use("/badge", badgeRoutes);
