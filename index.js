@@ -4,7 +4,7 @@ const { PrismaClient } = require("@prisma/client");
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
 const placeRoutes = require("./routes/placeRoute");
-// const gameRoute = require("./routes/gameRoute");
+const gameRoutes = require("./routes/gameRoute");
 // const eventRoute = require("./routes/eventRoute");
 // const badgeRoute = require("./routes/badgeRoute");
 // const bookingoute = require("./routes/bookingRoute");
@@ -26,7 +26,7 @@ app.get("/", async (req, res) => {
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/place", placeRoutes);
-// app.use("/game", gameRoutes);
+app.use("/game", gameRoutes);
 // app.use("/event", eventRoutes);
 // app.use("/badge", badgeRoutes);
 // app.use("/booking", bookingRoutes);
