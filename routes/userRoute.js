@@ -30,4 +30,16 @@ router
     userController.updateOne(req, res)
   );
 
+//Get all badge earned by the user
+router
+  .route("/:id/badge")
+  .get(
+    cache.get,
+    async (req, res) => userController.getBadge(req, res),
+    cache.set
+  )
+  .post(verifyToken, cache.clear, async (req, res) =>
+    userController.addBadge(req, res)
+  );
+
 module.exports = router;
