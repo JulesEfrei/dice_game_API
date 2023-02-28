@@ -6,7 +6,7 @@ const placeRoutes = require("./routes/placeRoute");
 const gameRoutes = require("./routes/gameRoute");
 const eventRoutes = require("./routes/eventRoute");
 const badgeRoutes = require("./routes/badgeRoute");
-// const bookingoute = require("./routes/bookingRoute");
+const bookingRoutes = require("./routes/bookingRoute");
 // const reviewRoute = require("./routes/reviewRoute");
 
 require("dotenv").config();
@@ -27,7 +27,7 @@ app.use("/place", placeRoutes);
 app.use("/game", gameRoutes);
 app.use("/event", eventRoutes);
 app.use("/badge", badgeRoutes);
-// app.use("/booking", bookingRoutes);
+app.use("/booking", bookingRoutes);
 // app.use("/review", reviewRoutes);
 
 app.listen(port, () => {
