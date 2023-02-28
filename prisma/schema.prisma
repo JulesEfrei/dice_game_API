@@ -45,14 +45,14 @@ model Place {
 model Game {
   id          Int        @id @default(autoincrement())
   name        String
-  description String
+  description String @db.Text()
   category    String
   quantity    Int        @default(1)
   price       Int?
   type        String
   age         String
   releaseYear DateTime
-  rating      Int
+  rating      Int?
   booking     Booking[]
   review      Review[]
   gameLike    GameLike[]
