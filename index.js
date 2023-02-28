@@ -1,12 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const { PrismaClient } = require("@prisma/client");
 const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
 const placeRoutes = require("./routes/placeRoute");
 const gameRoutes = require("./routes/gameRoute");
 const eventRoutes = require("./routes/eventRoute");
-// const badgeRoute = require("./routes/badgeRoute");
+const badgeRoutes = require("./routes/badgeRoute");
 // const bookingoute = require("./routes/bookingRoute");
 // const reviewRoute = require("./routes/reviewRoute");
 
@@ -27,7 +26,7 @@ app.use("/user", userRoutes);
 app.use("/place", placeRoutes);
 app.use("/game", gameRoutes);
 app.use("/event", eventRoutes);
-// app.use("/badge", badgeRoutes);
+app.use("/badge", badgeRoutes);
 // app.use("/booking", bookingRoutes);
 // app.use("/review", reviewRoutes);
 
