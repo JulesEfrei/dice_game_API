@@ -51,7 +51,6 @@ const addOne = async (req, res) => {
     });
     res.status(200).send({ success: "Game created!" });
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -60,7 +59,7 @@ const getOne = async (req, res) => {
   try {
     const game = await prisma.game.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
     if (game) {
@@ -77,14 +76,14 @@ const deleteOne = async (req, res) => {
   try {
     const find = await prisma.game.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const deleteGame = await prisma.game.delete({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
       });
       res.status(200).send({ success: `Game ${req.params.id} deleted!` });
@@ -100,14 +99,14 @@ const updateOne = async (req, res) => {
   try {
     const find = await prisma.game.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const updateGame = await prisma.game.update({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
         data: {
           name: req.body.name,
@@ -128,7 +127,6 @@ const updateOne = async (req, res) => {
       res.status(400).send({ error: "Game not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };

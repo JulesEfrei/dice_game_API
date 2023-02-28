@@ -71,8 +71,8 @@ async function newUser(req, res) {
 
       const welcomeBadge = await prisma.userToBadge.create({
         data: {
-          userId: parseInt(newUser.id),
-          badgeId: parseInt(1),
+          userId: newUser.id,
+          badgeId: "1",
         },
       });
 

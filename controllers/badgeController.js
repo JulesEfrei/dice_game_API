@@ -48,7 +48,7 @@ const getOne = async (req, res) => {
   try {
     const badge = await prisma.badge.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
     if (badge) {
@@ -66,14 +66,14 @@ const deleteOne = async (req, res) => {
   try {
     const find = await prisma.badge.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const deleteBadge = await prisma.badge.delete({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
       });
       res.status(200).send({ success: `Badge ${req.params.id} deleted!` });
@@ -89,14 +89,14 @@ const updateOne = async (req, res) => {
   try {
     const find = await prisma.badge.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const updatebadge = await prisma.badge.update({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
         data: req.body,
       });

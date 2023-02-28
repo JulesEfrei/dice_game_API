@@ -57,7 +57,7 @@ const getOne = async (req, res) => {
   try {
     const place = await prisma.place.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
     if (place) {
@@ -66,7 +66,6 @@ const getOne = async (req, res) => {
       res.status(400).send({ error: "Place not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -75,14 +74,14 @@ const deleteOne = async (req, res) => {
   try {
     const find = await prisma.place.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const deletePlace = await prisma.place.delete({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
       });
       res.status(200).send({ success: `Place ${req.params.id} deleted!` });
@@ -98,14 +97,14 @@ const updateOne = async (req, res) => {
   try {
     const find = await prisma.place.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const updatePlace = await prisma.place.update({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
         data: req.body,
       });
@@ -117,7 +116,6 @@ const updateOne = async (req, res) => {
       res.status(400).send({ error: "Place not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };

@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
+  id          String           @id @default(uuid())
   firstName   String
   lastName    String
   userName    String        @unique
@@ -31,7 +31,7 @@ model User {
 }
 
 model Place {
-  id      Int       @id @default(autoincrement())
+  id      String       @id @default(uuid())
   name    String
   address String    @unique
   city    String
@@ -43,7 +43,7 @@ model Place {
 }
 
 model Game {
-  id          Int        @id @default(autoincrement())
+  id          String        @id @default(uuid())
   name        String
   description String @db.Text()
   category    String
@@ -59,18 +59,18 @@ model Game {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(uuid())
   name        String
   description String
   date        DateTime
   img String @default("https://diceboardgamelounge.com/wp-content/uploads/2021/06/dungeonsatdice_tuesday.jpg")
   //place_id
   place       Place    @relation(fields: [placeId], references: [id])
-  placeId     Int
+  placeId     String
 }
 
 model Badge {
-  id          Int           @id @default(autoincrement())
+  id          String           @id @default(uuid())
   name        String
   description String
   condition   String        @unique
@@ -80,40 +80,40 @@ model Badge {
 }
 
 model Booking {
-  id       Int      @id @default(autoincrement())
+  id       String      @id @default(uuid())
   date     DateTime
   nbPeople Int
   //user_id
   user     User     @relation(fields: [userId], references: [id])
-  userId   Int
+  userId   String
   //game_id
   game     Game?     @relation(fields: [gameId], references: [id])
-  gameId   Int?
+  gameId   String?
   //place_id
   place    Place    @relation(fields: [placeId], references: [id])
-  placeId  Int
+  placeId  String
 }
 
 model Review {
-  id      Int    @id @default(autoincrement())
+  id      String    @id @default(uuid())
   content String
   rating  Int
   date DateTime @default(now())
   //user_id
   user    User   @relation(fields: [userId], references: [id])
-  userId  Int
+  userId  String
   //game_id
   game    Game   @relation(fields: [gameId], references: [id])
-  gameId  Int
+  gameId  String
 }
 
 model GameLike {
   //user_id
   user   User @relation(fields: [userId], references: [id])
-  userId Int
+  userId String
   //game_id
   game   Game @relation(fields: [gameId], references: [id])
-  gameId Int
+  gameId String
 
   @@id([userId, gameId])
 }
@@ -121,9 +121,9 @@ model GameLike {
 model UserToBadge {
   date DateTime @default(now())
   user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  Int
+  userId  String
   badge   Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
-  badgeId Int
+  badgeId String
 
   @@id([userId, badgeId])
 }
