@@ -21,14 +21,14 @@ app.get("/", async (req, res) => {
   res.send("Hello World!");
 });
 
-app.use("/auth", authRoutes);
-app.use("/user", userRoutes);
-app.use("/place", placeRoutes);
-app.use("/game", gameRoutes);
-app.use("/event", eventRoutes);
-app.use("/badge", badgeRoutes);
-app.use("/booking", bookingRoutes);
-app.use("/review", reviewRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/place", placeRoutes);
+app.use("/api/v1/game", gameRoutes);
+app.use("/api/v1/event", eventRoutes);
+app.use("/api/v1/badge", badgeRoutes);
+app.use("/api/v1/booking", bookingRoutes);
+app.use("/api/v1/review", reviewRoutes);
 
 app.listen(port, () => {
   console.log(`⚡️ [Server]: Server starting on port ${port}`);
