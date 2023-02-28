@@ -5,7 +5,7 @@ const authRoutes = require("./routes/authRoute");
 const userRoutes = require("./routes/userRoute");
 const placeRoutes = require("./routes/placeRoute");
 const gameRoutes = require("./routes/gameRoute");
-// const eventRoute = require("./routes/eventRoute");
+const eventRoutes = require("./routes/eventRoute");
 // const badgeRoute = require("./routes/badgeRoute");
 // const bookingoute = require("./routes/bookingRoute");
 // const reviewRoute = require("./routes/reviewRoute");
@@ -13,7 +13,6 @@ const gameRoutes = require("./routes/gameRoute");
 require("dotenv").config();
 
 const app = express();
-const prisma = new PrismaClient();
 const port = process.env.PORT;
 
 app.use(cors());
@@ -27,7 +26,7 @@ app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
 app.use("/place", placeRoutes);
 app.use("/game", gameRoutes);
-// app.use("/event", eventRoutes);
+app.use("/event", eventRoutes);
 // app.use("/badge", badgeRoutes);
 // app.use("/booking", bookingRoutes);
 // app.use("/review", reviewRoutes);
