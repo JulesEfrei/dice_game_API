@@ -118,6 +118,7 @@ const deleteOne = async (req, res) => {
       res.status(400).send({ error: "User not found!" });
     }
   } catch (err) {
+    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -153,9 +154,74 @@ const updateOne = async (req, res) => {
       res.status(400).send({ error: "User not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
 
-module.exports = { getAll, addOne, getOne, deleteOne, updateOne };
+const getBadge = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: parseInt(req.params.id),
+      },
+    });
+
+    if (user) {
+      const badges = await prisma.userToBadge.findMany({
+        where: {
+          userId: parseInt(req.params.id),
+        },
+        include: {
+          badge: true,
+        },
+      });
+      res.status(200).send({ data: badges });
+    } else {
+      res.status(404).send({ error: "User not found!" });
+    }
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+};
+
+const addBadge = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: parseInt(req.params.id),
+      },
+    });
+
+    const badge = await prisma.badge.findUnique({
+      where: {
+        id: parseInt(req.body.badgeId),
+      },
+    });
+
+    if (user && badge) {
+      const addBadgeToUser = await prisma.userToBadge.create({
+        data: {
+          userId: parseInt(req.params.id),
+          badgeId: parseInt(req.body.badgeId),
+        },
+      });
+      res.status(200).send({
+        success: `Badge ${req.body.badgeId} added to user ${req.body.userId}`,
+      });
+    } else {
+      res.status(404).send({ error: "Entity not found!" });
+    }
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+};
+
+module.exports = {
+  getAll,
+  addOne,
+  getOne,
+  deleteOne,
+  updateOne,
+  getBadge,
+  addBadge,
+};

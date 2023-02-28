@@ -119,9 +119,10 @@ model GameLike {
 }
 
 model UserToBadge {
-  user    User  @relation(fields: [userId], references: [id])
+  date DateTime @default(now())
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  Int
-  badge   Badge @relation(fields: [badgeId], references: [id])
+  badge   Badge @relation(fields: [badgeId], references: [id], onDelete: Cascade)
   badgeId Int
 
   @@id([userId, badgeId])

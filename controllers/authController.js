@@ -68,6 +68,14 @@ async function newUser(req, res) {
           phone: req.body.phone,
         },
       });
+
+      const welcomeBadge = await prisma.userToBadge.create({
+        data: {
+          userId: parseInt(newUser.id),
+          badgeId: parseInt(1),
+        },
+      });
+
       res.status(200).send({ success: "User Created!" });
     }
   } catch (err) {
