@@ -85,7 +85,7 @@ const getOne = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
     if (user) {
@@ -103,14 +103,14 @@ const deleteOne = async (req, res) => {
   try {
     const find = await prisma.user.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const deleteUser = await prisma.user.delete({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
       });
       res.status(200).send({ success: `User ${req.params.id} deleted!` });
@@ -127,14 +127,14 @@ const updateOne = async (req, res) => {
   try {
     const find = await prisma.user.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const updateUsers = await prisma.user.updateMany({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
         data: {
           firstName: req.body.firstName,
@@ -162,14 +162,14 @@ const getBadge = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (user) {
       const badges = await prisma.userToBadge.findMany({
         where: {
-          userId: parseInt(req.params.id),
+          userId: req.params.id,
         },
         include: {
           badge: true,
@@ -188,21 +188,21 @@ const addBadge = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     const badge = await prisma.badge.findUnique({
       where: {
-        id: parseInt(req.body.badgeId),
+        id: req.body.badgeId,
       },
     });
 
     if (user && badge) {
       const addBadgeToUser = await prisma.userToBadge.create({
         data: {
-          userId: parseInt(req.params.id),
-          badgeId: parseInt(req.body.badgeId),
+          userId: req.params.id,
+          badgeId: req.body.badgeId,
         },
       });
       res.status(200).send({

@@ -51,7 +51,7 @@ const getOne = async (req, res) => {
   try {
     const event = await prisma.event.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
       include: {
         place: true,
@@ -63,7 +63,6 @@ const getOne = async (req, res) => {
       res.status(400).send({ error: "Event not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -72,7 +71,7 @@ const getEventPlace = async (req, res) => {
   try {
     const event = await prisma.event.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
       include: {
         place: true,
@@ -84,7 +83,6 @@ const getEventPlace = async (req, res) => {
       res.status(400).send({ error: "Event not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -93,14 +91,14 @@ const deleteOne = async (req, res) => {
   try {
     const find = await prisma.event.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const deleteEvent = await prisma.event.delete({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
       });
       res.status(200).send({ success: `Event ${req.params.id} deleted!` });
@@ -116,14 +114,14 @@ const updateOne = async (req, res) => {
   try {
     const find = await prisma.event.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const updateEvent = await prisma.event.update({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
         data: {
           name: req.body.name,
@@ -140,7 +138,6 @@ const updateOne = async (req, res) => {
       res.status(400).send({ error: "Event not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };

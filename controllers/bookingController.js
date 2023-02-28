@@ -54,7 +54,7 @@ const getOne = async (req, res) => {
   try {
     const booking = await prisma.booking.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
       include: {
         place: true,
@@ -68,7 +68,6 @@ const getOne = async (req, res) => {
       res.status(400).send({ error: "Booking not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -77,7 +76,7 @@ const getBookingPlace = async (req, res) => {
   try {
     const booking = await prisma.booking.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
       include: {
         place: true,
@@ -89,7 +88,6 @@ const getBookingPlace = async (req, res) => {
       res.status(400).send({ error: "Booking not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -98,7 +96,7 @@ const getBookingUser = async (req, res) => {
   try {
     const booking = await prisma.booking.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
       include: {
         user: true,
@@ -110,7 +108,6 @@ const getBookingUser = async (req, res) => {
       res.status(400).send({ error: "Booking not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -119,7 +116,7 @@ const getBookingGame = async (req, res) => {
   try {
     const booking = await prisma.booking.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
       include: {
         game: true,
@@ -131,7 +128,6 @@ const getBookingGame = async (req, res) => {
       res.status(400).send({ error: "Booking not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -140,14 +136,14 @@ const deleteOne = async (req, res) => {
   try {
     const find = await prisma.booking.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const deleteBooking = await prisma.booking.delete({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
       });
       res.status(200).send({ success: `Booking ${req.params.id} deleted!` });
@@ -163,14 +159,14 @@ const updateOne = async (req, res) => {
   try {
     const find = await prisma.booking.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const updateBooking = await prisma.booking.update({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
         data: {
           date: req.body.date && new Date(req.body.date),
@@ -188,7 +184,6 @@ const updateOne = async (req, res) => {
       res.status(400).send({ error: "Booking not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };

@@ -52,7 +52,7 @@ const getOne = async (req, res) => {
   try {
     const review = await prisma.review.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
       include: {
         user: true,
@@ -74,7 +74,7 @@ const getReviewUser = async (req, res) => {
   try {
     const review = await prisma.review.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
       include: {
         user: true,
@@ -86,7 +86,6 @@ const getReviewUser = async (req, res) => {
       res.status(400).send({ error: "Review not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -95,7 +94,7 @@ const getReviewGame = async (req, res) => {
   try {
     const review = await prisma.review.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
       include: {
         game: true,
@@ -107,7 +106,6 @@ const getReviewGame = async (req, res) => {
       res.status(400).send({ error: "Review not found!" });
     }
   } catch (err) {
-    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -116,14 +114,14 @@ const deleteOne = async (req, res) => {
   try {
     const find = await prisma.review.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const deleteReview = await prisma.review.delete({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
       });
       res.status(200).send({ success: `Review ${req.params.id} deleted!` });
@@ -139,14 +137,14 @@ const updateOne = async (req, res) => {
   try {
     const find = await prisma.review.findUnique({
       where: {
-        id: parseInt(req.params.id),
+        id: req.params.id,
       },
     });
 
     if (find) {
       const updateReview = await prisma.review.update({
         where: {
-          id: parseInt(req.params.id),
+          id: req.params.id,
         },
         data: {
           userId: req.body.userId,
