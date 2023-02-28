@@ -109,7 +109,16 @@ const updateOne = async (req, res) => {
         where: {
           id: parseInt(req.params.id),
         },
-        data: req.body,
+        data: {
+          name: req.body.name,
+          description: req.body.description,
+          category: req.body.category,
+          type: req.body.type,
+          age: req.body.age,
+          releaseYear: req.body.releaseYear && new Date(req.body.releaseYear),
+          ...(req.body.quantity && { quantity: req.body.quantity }),
+          ...(req.body.price && { quantity: req.body.price }),
+        },
       });
       res.status(200).send({
         success: `Game ${req.params.id} updated!`,

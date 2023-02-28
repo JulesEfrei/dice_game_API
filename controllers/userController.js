@@ -135,7 +135,16 @@ const updateOne = async (req, res) => {
         where: {
           id: parseInt(req.params.id),
         },
-        data: req.body,
+        data: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          userName: req.body.userName,
+          email: req.body.email,
+          password: req.body.password && bcrypt.hashSync(req.body.password, 10),
+          gender: req.body.gender,
+          birthday: req.body.birthday && new Date(req.body.birthday),
+          phone: req.body.phone,
+        },
       });
       res
         .status(200)
