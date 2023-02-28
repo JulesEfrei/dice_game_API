@@ -63,6 +63,7 @@ model Event {
   name        String
   description String
   date        DateTime
+  img String @default("https://diceboardgamelounge.com/wp-content/uploads/2021/06/dungeonsatdice_tuesday.jpg")
   //place_id
   place       Place    @relation(fields: [placeId], references: [id])
   placeId     Int
