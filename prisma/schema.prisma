@@ -136,6 +136,6 @@ enum Role {
 
 enum Gender {
   Male
-  Femele
+  Female
   Other
 }
