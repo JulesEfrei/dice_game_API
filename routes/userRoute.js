@@ -42,4 +42,16 @@ router
     userController.addBadge(req, res)
   );
 
+//Get all badge earned by the user
+router
+  .route("/:id/game-liked")
+  .get(
+    cache.get,
+    async (req, res) => userController.getLike(req, res),
+    cache.set
+  )
+  .post(verifyToken, cache.clear, async (req, res) =>
+    userController.addLike(req, res)
+  );
+
 module.exports = router;

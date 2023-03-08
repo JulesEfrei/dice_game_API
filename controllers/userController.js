@@ -87,6 +87,18 @@ const getOne = async (req, res) => {
       where: {
         id: req.params.id,
       },
+      include: {
+        UserToBadge: {
+          include: {
+            badge: true,
+          },
+        },
+        gameLike: {
+          include: {
+            game: true,
+          },
+        },
+      },
     });
     if (user) {
       res.status(200).send({ user });
@@ -206,12 +218,71 @@ const addBadge = async (req, res) => {
         },
       });
       res.status(200).send({
-        success: `Badge ${req.body.badgeId} added to user ${req.body.userId}`,
+        success: `Badge ${req.body.badgeId} added to user ${req.params.id}`,
       });
     } else {
       res.status(404).send({ error: "Entity not found!" });
     }
   } catch (err) {
+    res.status(400).send({ error: err });
+  }
+};
+
+const getLike = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (user) {
+      const likes = await prisma.gameLike.findMany({
+        where: {
+          userId: req.params.id,
+        },
+        include: {
+          game: true,
+        },
+      });
+      res.status(200).send({ data: likes });
+    } else {
+      res.status(404).send({ error: "User not found!" });
+    }
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+};
+
+const addLike = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    const game = await prisma.game.findUnique({
+      where: {
+        id: req.body.gameId,
+      },
+    });
+
+    if (user && game) {
+      const addGameLiked = await prisma.gameLike.create({
+        data: {
+          userId: req.params.id,
+          gameId: req.body.gameId,
+        },
+      });
+      res.status(200).send({
+        success: `Game ${req.body.gameId} is liked by user ${req.params.id}`,
+      });
+    } else {
+      res.status(404).send({ error: "Entity not found!" });
+    }
+  } catch (err) {
+    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -224,4 +295,6 @@ module.exports = {
   updateOne,
   getBadge,
   addBadge,
+  getLike,
+  addLike,
 };
