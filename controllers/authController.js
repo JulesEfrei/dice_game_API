@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { PrismaClient } = require("@prisma/client");
-const avatar = require("../utils/avatar");
 
 const prisma = new PrismaClient();
 
@@ -47,9 +46,6 @@ async function newUser(req, res) {
     res.status(400).send({ error: "Birthday missing" });
     return false;
   }
-
-  const svg = await avatar();
-  console.log(svg);
 
   try {
     const user = await prisma.user.findUnique({

@@ -4,7 +4,18 @@ const prisma = new PrismaClient();
 
 const getAll = async (res) => {
   try {
-    const games = await prisma.game.findMany();
+    const games = await prisma.game.findMany({
+      include: {
+        review: {
+          include: {
+            user: true,
+          },
+          orderBy: {
+            date: "asc",
+          },
+        },
+      },
+    });
     res.status(200).send({ data: games });
   } catch (err) {
     res.status(400).send({ error: err });
@@ -24,10 +35,6 @@ const addOne = async (req, res) => {
     res.status(400).send({ error: "category is missing!" });
   }
 
-  if (!req.body.type) {
-    res.status(400).send({ error: "type code is missing!" });
-  }
-
   if (!req.body.age) {
     res.status(400).send({ error: "age is missing!" });
   }
@@ -44,13 +51,18 @@ const addOne = async (req, res) => {
         category: req.body.category,
         type: req.body.type,
         age: req.body.age,
+        minPlayers: req.body.minPlayers,
+        maxPlayers: req.body.maxPlayers,
+        playTime: req.body.playTime,
         releaseYear: new Date(req.body.releaseYear),
         ...(req.body.quantity && { quantity: req.body.quantity }),
         ...(req.body.price && { quantity: req.body.price }),
+        ...(req.body.rating && { quantity: req.body.rating }),
       },
     });
     res.status(200).send({ success: "Game created!" });
   } catch (err) {
+    console.log(err);
     res.status(400).send({ error: err });
   }
 };
@@ -60,6 +72,16 @@ const getOne = async (req, res) => {
     const game = await prisma.game.findUnique({
       where: {
         id: req.params.id,
+      },
+      include: {
+        review: {
+          include: {
+            user: true,
+          },
+          orderBy: {
+            date: "asc",
+          },
+        },
       },
     });
     if (game) {
