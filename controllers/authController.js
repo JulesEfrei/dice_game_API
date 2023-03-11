@@ -66,6 +66,7 @@ async function newUser(req, res) {
           gender: req.body.gender,
           birthday: new Date(req.body.birthday),
           phone: req.body.phone,
+          avatar: svg,
         },
       });
 
@@ -79,6 +80,7 @@ async function newUser(req, res) {
       res.status(200).send({ success: "User Created!" });
     }
   } catch (err) {
+    console.log(err);
     res.status(400).send({ error: err });
   }
 }

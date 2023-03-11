@@ -20,7 +20,7 @@ model User {
   gender      Gender        @default(Male)
   birthday    DateTime
   phone       String
-  avatar      String        @default("http://cdn.onlinewebfonts.com/svg/img_561543.png")
+  avatar      String 
   fidelity    Int           @default(0)
   role        Role          @default(FREE)
   booking     Booking[]
@@ -45,14 +45,17 @@ model Place {
 model Game {
   id          String        @id @default(uuid())
   name        String
-  description String @db.Text()
+  description String        @db.Text() 
   category    String
   quantity    Int        @default(1)
   price       Int?
-  type        String
+  type        String @default("Board Game")
   age         String
   releaseYear DateTime
   rating      Int?
+  minPlayers Int @default(2)
+  maxPlayers Int @default(0)
+  playTime Int @default(0)
   booking     Booking[]
   review      Review[]
   gameLike    GameLike[]
