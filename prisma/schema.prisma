@@ -64,8 +64,10 @@ model Game {
 model Event {
   id          String      @id @default(uuid())
   name        String
-  description String
-  date        DateTime
+  description String @db.Text()
+  exactDate        DateTime?
+  day String?
+  time String?
   img String @default("https://diceboardgamelounge.com/wp-content/uploads/2021/06/dungeonsatdice_tuesday.jpg")
   //place_id
   place       Place    @relation(fields: [placeId], references: [id])

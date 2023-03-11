@@ -24,10 +24,6 @@ const addOne = async (req, res) => {
     res.status(400).send({ error: "Description is missing!" });
   }
 
-  if (!req.body.date) {
-    res.status(400).send({ error: "Date is missing!" });
-  }
-
   if (!req.body.placeId) {
     res.status(400).send({ error: "Place Id is missing!" });
   }
@@ -37,8 +33,10 @@ const addOne = async (req, res) => {
       data: {
         name: req.body.name,
         description: req.body.description,
-        date: new Date(req.body.date),
         placeId: req.body.placeId,
+        ...(req.body.exactDate && { exactDate: new Date(req.body.date) }),
+        ...(req.body.day && { day: req.body.day }),
+        ...(req.body.time && { time: req.body.time }),
       },
     });
     res.status(200).send({ success: "Event created!" });
