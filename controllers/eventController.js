@@ -37,6 +37,8 @@ const addOne = async (req, res) => {
         ...(req.body.exactDate && { exactDate: new Date(req.body.date) }),
         ...(req.body.day && { day: req.body.day }),
         ...(req.body.time && { time: req.body.time }),
+        ...(req.body.time && { time: req.body.time }),
+        ...(req.body.img && { img: req.body.img }),
       },
     });
     res.status(200).send({ success: "Event created!" });
@@ -124,8 +126,12 @@ const updateOne = async (req, res) => {
         data: {
           name: req.body.name,
           description: req.body.description,
-          date: req.body.date && new Date(req.body.date),
           placeId: req.body.placeId,
+          ...(req.body.exactDate && { exactDate: new Date(req.body.date) }),
+          ...(req.body.day && { day: req.body.day }),
+          ...(req.body.time && { time: req.body.time }),
+          ...(req.body.time && { time: req.body.time }),
+          ...(req.body.img && { img: req.body.img }),
         },
       });
       res.status(200).send({
