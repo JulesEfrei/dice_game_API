@@ -254,6 +254,32 @@ const getLike = async (req, res) => {
   }
 };
 
+const getOneLike = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (user) {
+      const likes = await prisma.gameLike.findMany({
+        where: {
+          AND: [{ userId: req.params.id }, { gameId: req.params.gameId }],
+        },
+        include: {
+          game: true,
+        },
+      });
+      res.status(200).send({ data: likes });
+    } else {
+      res.status(404).send({ error: "User not found!" });
+    }
+  } catch (err) {
+    res.status(400).send({ error: err });
+  }
+};
+
 const addLike = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
@@ -287,6 +313,48 @@ const addLike = async (req, res) => {
   }
 };
 
+const deleteLike = async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    const game = await prisma.game.findUnique({
+      where: {
+        id: req.params.gameId,
+      },
+    });
+
+    if (user && game) {
+      const isLike = await prisma.gameLike.findUnique({
+        where: {
+          userId_gameId: { userId: req.params.id, gameId: req.params.gameId },
+        },
+      });
+
+      if (isLike) {
+        const deleteLike = await prisma.gameLike.delete({
+          where: {
+            userId_gameId: { userId: req.params.id, gameId: req.params.gameId },
+          },
+        });
+        res
+          .status(200)
+          .send({ success: `Like of game ${req.params.gameId} deleted!` });
+      } else {
+        res.status(400).send({ error: "Game is not liked" });
+      }
+    } else {
+      res.status(400).send({ error: "User / Game not found!" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(400).send({ error: err });
+  }
+};
+
 module.exports = {
   getAll,
   addOne,
@@ -297,4 +365,6 @@ module.exports = {
   addBadge,
   getLike,
   addLike,
+  getOneLike,
+  deleteLike,
 };

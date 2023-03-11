@@ -54,4 +54,13 @@ router
     userController.addLike(req, res)
   );
 
+router
+  .route("/:id/game-liked/:gameId")
+  .get(
+    cache.get,
+    async (req, res) => userController.getOneLike(req, res),
+    cache.set
+  )
+  .delete(cache.clear, async (req, res) => userController.deleteLike(req, res));
+
 module.exports = router;
